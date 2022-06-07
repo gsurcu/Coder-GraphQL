@@ -1,12 +1,20 @@
-require('dotenv').config({
+const dotenv = require('dotenv')
+dotenv.config()
+dotenv.config({
   path: require('path').resolve(process.cwd(), process.env.NODE_ENV + '.env')
 });
 
+const {
+  NODE_ENV,
+  HOST,
+  PORT,
+  TIPO_PERSISTENCIA,
+} = process.env;
+
 module.exports = {
-  NODE_ENV: process.env.NODE_ENV || 'develpoment',
-  HOST: process.env.HOST || 'localhost',
-  PORT: process.env.PORT || 8080,
-  DB_URI: (database) => `mongodb+srv://gab121:${process.env.DB_PASSWORD}@appprueba.jibhv.mongodb.net/${database}?retryWrites=true&w=majority`,
+  NODE_ENV: NODE_ENV || 'development',
+  HOST: HOST || 'localhost',
+  PORT: PORT || 8080,
   // MEM - FILE - MONGO
-  TIPO_PERSISTENCIA: process.env.TIPO_PERSISTENCIA || 'MEM'
+  TIPO_PERSISTENCIA: TIPO_PERSISTENCIA || 'MEM'
 }

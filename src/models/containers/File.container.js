@@ -14,7 +14,7 @@ class FileContainer {
   static instancia;
   constructor(fileName) {
     this.fileName = fileName;
-    this.open()
+    this.open();
   }
 
   async open(){
@@ -25,7 +25,8 @@ class FileContainer {
         await this.createItem([]);
       }
     } catch (error) {
-
+      const newError = formatErrorObject(INTERNAL_ERROR.tag, error.message);
+      errorLog(JSON.stringify(newError));
     }
   }
 
@@ -67,8 +68,8 @@ class FileContainer {
 
   async createItem(resourceItem) {
     try {
-      const newItem = await fs.promises.writeFile(this.fileName, JSON.stringify(resourceItem,null, 2), 'utf-8')
-      return newItem;
+      await fs.promises.writeFile(this.fileName, JSON.stringify(resourceItem, null, 2), 'utf-8');;
+      return resourceItem;
     }
     catch (error) {
       const newError = formatErrorObject(INTERNAL_ERROR.tag, error.message);
@@ -76,24 +77,9 @@ class FileContainer {
     }
   }
 
-  async deleteById(id){
-    try {
-      const docs = await this.getAll();
-      if (docs) {
-        const newDocs = docs.filter(item => item._id !== id);
-        return await this.createItem(newDocs);
-      }
-      return false;
-    } catch (error) {
-      const newError = formatErrorObject(INTERNAL_ERROR.tag, error.message);
-      errorLog(JSON.stringify(newError));
-    }
-  }
-
   async deleteAll() {
     try {
-      const delItem = await fs.promises.unlink(this.nombre);
-      return delItem
+      return await fs.promises.unlink(this.fileName);
     } catch (error) {
       const newError = formatErrorObject(INTERNAL_ERROR.tag, error.message);
       errorLog(JSON.stringify(newError));

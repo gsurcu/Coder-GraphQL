@@ -1,13 +1,30 @@
+const { v4: uuidv4 } = require("uuid")
+const { errorLog } = require("../../../middlewares/logger")
 const MemoryContainer = require("../../containers/Memory.container")
+const productsDto = require("../../dtos/Products.dto")
 
 class ProductsMemDao extends MemoryContainer {
+  static instance
   constructor() {
     super()
+    if (!ProductsMemDao.instance) {
+      ProductsMemDao.instance = this;
+      return this;
+    } else {
+      return ProductsMemDao.instance;
+    }
+  }
+
+  async getItem(id) {
+    if(id) {
+      return await this.getById(id)
+    }
+    return await this.getAll()
   }
 
   async saveItem(item) {
     try {
-      const newItem = {...item, timeStamp: Date.now()}
+      const newItem = productsDto(item, uuidv4(), Date.now())
       return await this.createItem(newItem)
     } catch (error) {
       errorLog(error.message)
@@ -16,7 +33,7 @@ class ProductsMemDao extends MemoryContainer {
   
   async updateItem(id, item = {}) {
     try {
-      const indice = this.items.findIndex(prod => prod.id === +id);
+      const indice = this.items.findIndex(prod => prod.id === id);
       const updateItem = await this.getById(id);
       for (const key in item) {
         if (item[key] = '') {

@@ -1,8 +1,8 @@
-const { DB_URI } = require('./index');
+require('dotenv')
 
 const DBConfig = {
   mongo: {
-    uri: DB_URI,
+    DB_URI: (database) => `mongodb+srv://gab121:${process.env.DB_PASSWORD}@appprueba.jibhv.mongodb.net/${database}?retryWrites=true&w=majority`,
     projection: { __v: 0 }
   }
 }

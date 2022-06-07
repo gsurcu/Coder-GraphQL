@@ -1,8 +1,8 @@
-const productsDto = (product, _id, fyh) => {
+const productsDto = (product, _id, timeStamp) => {
   return {
     ...product,
     _id,
-    fyh
+    timeStamp
   }
 }
 
