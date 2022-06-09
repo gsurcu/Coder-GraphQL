@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Mesa chica",
+    "price": 1200.23,
+    "imgUrl": "asdf",
+    "code": "123123",
+    "description": "Dimesiones: 40cmx65cm, Altura: 40cm",
+    "stock": 10,
+    "_id": "f0926a47-8da0-4463-86a3-ebafbe397b9a",
+    "timeStamp": 1654806159730
+  }
+]

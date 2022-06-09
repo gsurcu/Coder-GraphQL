@@ -1,5 +1,5 @@
-const CartsDao = require('../models/daos/Carts.dao');
-const ProductsDao = require('../models/daos/Products.factory.dao')
+const CartsDao = require('../models/daos/carts/Carts.dao');
+const ProductsDao = require('../models/factory/Products.factory.dao')
 
 class CartsController {
   constructor() {
